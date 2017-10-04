@@ -190,6 +190,12 @@ module ActiveMerchant
         doc.send("merchant-transaction-id", truncate(options[:order_id], 50)) if options[:order_id]
         doc.send("soft-descriptor", options[:soft_descriptor]) if options[:soft_descriptor]
         add_description(doc, options[:description]) if options[:description]
+        
+        if options[:fraud_session_id]
+          doc.send("fraud-info") do
+            doc.send("fraud-session-id", options[:fraud_session_id])
+          end
+        end
       end
 
       def add_address(doc, options)
