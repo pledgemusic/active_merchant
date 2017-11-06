@@ -140,7 +140,7 @@ module ActiveMerchant
       def add_auth_purchase(doc, money, payment_method, options)
         doc.send("recurring-transaction", options[:recurring] ? "RECURRING" : "ECOMMERCE")
         add_order(doc, options)
-        add_amount(doc, money)
+        add_amount(doc, money, options)
         doc.send("transaction-fraud-info") do
           doc.send("shopper-ip-address", options[:ip]) if options[:ip]
         end
@@ -155,7 +155,7 @@ module ActiveMerchant
         end
       end
 
-      def add_amount(doc, money)
+      def add_amount(doc, money, options)
         doc.amount(amount(money))
         doc.currency(options[:currency] || currency(money))
       end
